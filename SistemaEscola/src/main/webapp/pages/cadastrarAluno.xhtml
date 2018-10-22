@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Aluno</title>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+    
+       <p:panel header="ALUNO"> 
+       <p:messages />
+         <h:panelGrid columns="2">
+            <h:outputLabel value="NOME:" for="nome" />
+         
+            <p:inputText id="nome" label="nome" value="#{alunoBean.aluno.nome}" maxlength="14" size="40"  />
+ 
+            <h:outputLabel value="ANIVERSÁRIO:" for="data" />
+            <p:inputText id="data" label="data" value="#{alunoBean.aluno.data}" maxlength="14" size="40"  />
+ 
+            <h:outputLabel value="MATRICULA" for="matricula" />
+            <p:inputText id="matricula" label="matricula" value="#{alunoBean.aluno.matricula}" maxlength="14" size="40"  />
+
+          
+            <p:commandButton id="btnSalvar" value="SALVAR" actionListener="#{alunoBean.salvar()}" update="form" />
+          </h:panelGrid>
+
+            <p:dataTable id="tabela" value="#{alunoBean.alunos}" var="aluno" emptyMessage="Nenhum registro incluido." paginator="true" rows="10">
+                 
+		<f:facet name="header"> Alunos </f:facet>
+		
+		<p:dataTable var="aluno" value="#{alunoBean.alunos}"
+			emptyMessage="Sem alunos cadastrados!" editable="true">
+
+			<f:facet name="header"> Alunos Cadastrados</f:facet>
+			<p:ajax event="rowEdit" listener="#{alunoBean.onRowEdit(aluno)}"
+				update=":form:growl" />
+
+			<p:column headerText="ID" sortable="true" sortBy="#{aluno.id}">
+				<h:outputText value="#{aluno.id}" />
+			</p:column>
+
+			<p:column headerText="Nome">
+
+				<p:cellEditor rendered="#{professorBean.isUserInRole('PROF')}">
+					<f:facet name="output">
+						<h:outputText value="#{aluno.nome}" />
+					</f:facet>
+
+					<f:facet name="input">
+						<h:inputText value="#{aluno.nome}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column style="width:32px">
+				<p:rowEditor />
+			</p:column>
+
+			<p:column style="width:120px">
+				<p:commandButton value="Remover" update="form"
+					rendered="#{professorBean.isUserInRole('PROF')}"
+					action="#{alunoBean.removerAluno(aluno)}" />
+                  </p:column>
+
+		</p:dataTable>
+                  
+                <f:facet name="header">  
+                    Lista de Alunos  
+                </f:facet>
+         
+                <p:column headerText="NOME" style="text-align: center">
+                
+                    <h:outputText value="#{aluno.nome}" />
+                </p:column>
+                <p:column headerText="ANIVERSARIO" style="text-align: center">
+                    <h:outputText value="#{aluno.aniversario}" />
+                </p:column>
+                <p:column headerText="MATRICULA" style="text-align: center">
+                    <h:outputText value="#{aluno.matricula}" />
+               
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+        </h:form>   
+                <h:form id="dlg">
+            <p:confirmDialog message="Deseja realmente excluir este registro?" hideEffect="explode" header="Aviso" severity="alert" widgetVar="confirmation" modal="true">
+                
+                <p:commandButton id="btnSim" value="Sim." oncomplete="confirmation.hide();" actionListener="#{alunoBean.excluir}" process="@form" update="form:tabela" />
+                
+                <p:commandButton id="btnNao" value="Não." onclick="confirmation.hide();" type="button"/>
+            </p:confirmDialog>
+        </h:form>
+    </h:body>
+</html>

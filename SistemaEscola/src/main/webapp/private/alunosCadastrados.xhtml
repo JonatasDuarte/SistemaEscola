@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Aluno</title>
+</h:head>
+<h:form id="form">
+	<h:body>
+		<p:dataTable value="#{alunoBean.alunos}"
+			emptyMessage="Nenhum aluno cadastrado!" var="aluno" editable="true">
+			<p:column headerText="Nome">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{aluno.nome}" />
+					</f:facet>
+					<p:ajax event="rowEdit" listener="#{alunoBean.onRowEdit(aluno)}"
+						update=":form" />
+
+					<f:facet name="input">
+						<h:inputText value="#{aluno.nome}" style="width:100%" />
+					</f:facet>
+
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="Matricula" sortable="true"
+				sortBy="#{aluno.matricula}">
+				<h:outputText value="#{aluno.matricula}" />
+
+			</p:column>
+			
+			<p:column headerText="Deletar aluno">
+				<p:button value="Deletar" action="#{alunoBean.removerAluno(aluno)}"></p:button>
+			</p:column>
+		</p:dataTable>
+	</h:body>
+</h:form>
+
+</html>

@@ -1,6 +1,5 @@
 package entities;
 
-import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -21,7 +20,7 @@ public class Aluno implements Identificavel {
 	private Long matricula;
 	
 	private String nome;
-	private Date data;
+	private String data;
 	
 	@ManyToMany
 	@JoinTable(name = "aluno_disciplina", joinColumns = { @JoinColumn(name = "disciplina_iDdis") }, inverseJoinColumns = {
@@ -52,12 +51,14 @@ public class Aluno implements Identificavel {
 		this.nome = nome;
 	}
 
-	public Date getData() {
+	public String getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(String data) {
 		this.data = data;
 	}
+
+	
 
 }

@@ -36,15 +36,25 @@ public class AlunoBean implements Serializable {
 
 	}
 	
+	public void removerAluno(Aluno a) {
+		service.remove(a);
+		limpar();
+	}
+	
+
 	public void limpar() {
 		aluno = new Aluno();
 		setAlunos((Set<Aluno>) getService().getAll());
 	}
 	
-	public void onRowEdit(Aluno obj) {
-		service.update(obj);
-		FacesMessage msg = new FacesMessage("Aluno editado", obj.getNome());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+	public void salvar() {
+		service.save(aluno);
+		limpar();
+	}
+	public void onRowEdit(Aluno a) {
+		service.update(a);
+		FacesMessage m = new FacesMessage("Edição compleata:", a.getNome());
+		FacesContext.getCurrentInstance().addMessage(null, m);
 		limpar();
 	}
 	

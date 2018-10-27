@@ -1,6 +1,6 @@
 //Cadastrar o Data Source(gerenciador da conexão com o BD);
 
-/subsystem=datasources/data-source=PostgreSQLPoolEscolaJonatas:add(driver-name="postgres", jndi-name="java:/jonatasDS", connection-url="jdbc:postgresql://localhost:5432/ProvaJonatas", user-name="postgres", password="postgres");
+/subsystem=datasources/data-source=PostgreSQLPoolEscolaJonatas:add(driver-name="postgres", jndi-name="java:/jonatasDS", connection-url="jdbc:postgresql://localhost:5432/SistemaEscola", user-name="postgres", password="postgres");
 
 //Cadastrar o JDBC Realm;
 
